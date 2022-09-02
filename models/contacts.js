@@ -76,6 +76,12 @@ const updateContact = async (req, res) => {
     const id = req.params.id;
     const { name, email, phone } = req.body;
     const data = await getListContact();
+    const isId = data.find((item) => item.id === id);
+
+    if (!isId) {
+      return res.status(404).json({ message: "Not found" });
+    }
+
     await data.forEach((item) => {
       if (item.id === id) {
         if (name) {
@@ -90,11 +96,6 @@ const updateContact = async (req, res) => {
         newItem = item;
       }
     });
-
-    const isId = data.find((item) => item.id === id);
-    if (!isId) {
-      return res.status(404).json({ message: "Not found" });
-    }
 
     await fs.writeFile(contactsPath, JSON.stringify(data), "utf8");
     res.status(200).json(newItem);
