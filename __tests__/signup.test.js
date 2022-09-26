@@ -27,6 +27,6 @@ describe("signupController test", () => {
 
     // eslint-disable-next-line no-undef
     expect(loginMock.mockReturnValueOnce(token, user));
-    done();
+    
   });
 });
